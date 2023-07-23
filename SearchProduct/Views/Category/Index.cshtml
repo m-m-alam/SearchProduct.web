@@ -1,0 +1,100 @@
+﻿@model IEnumerable<SearchProduct.Models.Product>;
+@{
+    ViewData["Title"] = "Index";
+    int sl = 0;
+}
+
+
+<br />
+<br />
+<br />
+<div class="row">
+    <div class="col-6">
+        <h2>Product List</h2>
+    </div>
+    <div class="col-6 text-end">
+        <a class="btn btn-primary" asp-action="Create" asp-controller="Category">Add Category</a>
+    </div>
+</div>
+<br />
+<div class="row">
+    @*<table class="table table-bordered">
+        <thead>
+            <tr class="table-info">
+                <th>SL</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody class="BodyData" id="BodyData">
+        </tbody>
+
+    </table>*@
+
+
+    <table id="productTable" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            // Function to fetch and display product data
+            function displayCategories() {
+                $.ajax({
+                    type: "GET",
+                    url: "/Category/GetData",
+                    dataType: "json",
+                    success: function (data) {
+                        var tbody = $("#productTable tbody");
+                        tbody.empty();
+
+                        $.each(data, function (index, category) {
+                            var row = "<tr>" +
+                                "<td>" + category.id + "</td>" +
+                                "<td>" + category.name + "</td>" +
+                                "<td>" +
+                                "<a class='btn btn-primary' href='/Category/Edit/" + category.id + "' >Edit</a>" +
+                                "<button type='button' class='btn btn-danger deleteData' click='deleteD(1)' data-id='" + category.id + "'>Delete</button>" +
+                                "</td>" +
+                                "</tr>";
+
+                            tbody.append(row);
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            // Initial display of products
+            displayCategories();
+        });
+
+        function deleteD(id) {
+        //$(document).on("click", ".deleteData", function () {
+            //var id = $(this).data("id");
+            
+            //$.ajax({
+            //    type: "POST",
+            //    url: '@Url.Action("Delete", "Category")',
+            //    data: id,
+            //    success: function (response) {
+            //        window.location.href = "/Category/Index"
+            //    }
+            //});
+        };
+    </script>
+}

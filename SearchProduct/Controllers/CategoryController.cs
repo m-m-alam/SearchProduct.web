@@ -35,9 +35,7 @@ namespace SearchProduct.Controllers
         {            
             _context.Categories.Add(category);
             _context.SaveChanges();
-            return Json(new { result = "success" });
-
-            //return View();
+            return Json(new { result = "success" });           
         }
        
         public IActionResult Edit(int id)
@@ -57,13 +55,13 @@ namespace SearchProduct.Controllers
             return Json(new { success = true });
         }
 
-        [HttpPost]
-        public IActionResult Delete(int id)
+        
+        public JsonResult Delete(int id)
         {
-            var product = _context.Products.Find(id);
+            var product = _context.Categories.FirstOrDefault(x=>x.Id==id);
             if (product != null)
             {
-                _context.Products.Remove(product);
+                _context.Categories.Remove(product);
                 _context.SaveChanges();
                 return Json(new { success = true });
             }
@@ -71,39 +69,7 @@ namespace SearchProduct.Controllers
             return Json(new { success = false });
         }
 
-        //public IActionResult Edit(int? id)
-        //{
-        //    if(id == null || id == 0)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var category = _context.Categories.FirstOrDefault(x=>x.Id == id);
-        //    if (category != null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(category);
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Edit(int id, Category category)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var exitProduct = _context.Products.FirstOrDefault(c => c.Name == category.Name);
-        //        if (exitProduct != null)
-        //        {
-        //            ViewBag.message = "This product is already exist";
-
-        //            return View(category);
-        //        }
-        //        _context.Categories.Update(category);
-        //        _context.SaveChanges();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View();
-        //}
+        
     }
 
 }

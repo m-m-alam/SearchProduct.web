@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SearchProduct.Models.Product>;
+﻿@model IEnumerable<SearchProduct.Models.Category>;
 @{
     ViewData["Title"] = "Index";    
 }
@@ -18,7 +18,7 @@
 <br />
 <div class="row">
 
-    <table id="productTable" class="table table-bordered">
+    <table id="categoryTable" class="table table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
@@ -46,7 +46,7 @@
                 url: "/Category/GetData",
                 dataType: "json",
                 success: function (data) {
-                    var tbody = $("#productTable tbody");
+                    var tbody = $("#categoryTable tbody");
                     tbody.empty();
 
                     $.each(data, function (index, category) {
@@ -73,7 +73,7 @@
             $.ajax({
                 url: "/Category/Delete?id=" +id ,               
                 success: function (response) {
-                    window.location.href = "/Category/Index"
+                    displayCategories();
                 }
             });
         };
